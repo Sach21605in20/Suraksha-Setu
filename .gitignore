@@ -39,3 +39,8 @@ spring-shell.log
 # Build logs
 build*.txt
 full_build.txt
+
+# Documentation and Text Files
+docs/
+*.md
+*.txt
