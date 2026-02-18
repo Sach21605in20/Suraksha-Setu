@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: orthowatch-backend
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/orthowatch
+    username: orthowatch_user
+    password: orthowatch_pass
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+logging:
+  level:
+    com.orthowatch: DEBUG
+    org.springframework.web: INFO

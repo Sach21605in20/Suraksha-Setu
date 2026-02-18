@@ -1,0 +1,2 @@
+-- Placeholder for seeding admin user
+-- This migration would insert the initial admin user with hashed password

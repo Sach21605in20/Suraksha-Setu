@@ -1,0 +1,3 @@
+-- Placeholder for seeding templates
+-- This migration would contain INSERT statements for recovery_templates and risk_rules
+-- Keeping it minimal to ensure successful build/run first
