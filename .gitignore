@@ -35,3 +35,7 @@ uploads/
 
 # Spring Boot
 spring-shell.log
+
+# Build logs
+build*.txt
+full_build.txt
