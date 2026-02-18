@@ -1,0 +1,7 @@
+Read documentation_guide.md and study the [] 
+section and its template carefully.
+
+Then read all files in docs/.
+
+Generate [] for following 
+Save it to docs/[]

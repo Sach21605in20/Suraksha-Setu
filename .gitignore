@@ -1,0 +1,37 @@
+# Java / Maven
+target/
+*.jar
+*.war
+*.class
+*.log
+.mvn/timing.properties
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node / Frontend
+node_modules/
+dist/
+.pnp
+.pnp.js
+
+# Uploads (local dev)
+uploads/
+
+# Spring Boot
+spring-shell.log

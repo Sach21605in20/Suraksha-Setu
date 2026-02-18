@@ -1,0 +1,24 @@
+Read these files before writing any code:
+- docs/PROGRESS.md
+- docs/PRD.md
+- docs/APP_FLOW.md
+- docs/TECH_STACK.md
+- docs/FRONTEND_GUIDELINES.md
+- docs/BACKEND_STRUCTURE.md
+- docs/IMPLEMENTATION_PLAN.md
+
+Today's task: [SPECIFIC TASK]
+
+Rules:
+- Read docs/PROGRESS.md
+- Follow docs/workflow-guides/git-integration.md for commits
+- Follow docs/workflow-guides/verification-patterns.md before 
+  marking done, applying its principles to the stack in 
+  docs/TECH_STACK.md not the React examples in the guide
+- Follow docs/workflow-guides/checkpoints.md before moving to next task
+- verify every success criteria checkbox, update docs/PROGRESS.md when complete
+- No stubs, no placeholders, no TODO comments
+
+**When building logic-heavy things like the risk scoring engine:**
+
+- For business logic, follow docs/workflow-guides/tdd.md
