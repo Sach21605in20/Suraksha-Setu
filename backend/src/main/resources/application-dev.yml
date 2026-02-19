@@ -2,10 +2,7 @@ spring:
   config:
     activate:
       on-profile: dev
-  datasource:
-    url: jdbc:postgresql://localhost:5432/orthowatch
-    username: orthowatch_user
-    password: orthowatch_pass
+
   data:
     redis:
       host: localhost
@@ -15,8 +12,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          time_zone: Asia/Kolkata
 
 logging:
   level:
     com.orthowatch: DEBUG
     org.springframework.security: DEBUG
+
+app:
+  jwt:
+    secret: ZGV2c2VjcmV0a2V5bWluaW11bTMyY2hhcmFjdGVyc2xvbmc=
+    refresh-secret: ZGV2cmVmcmVzaHNlY3JldG1pbmltdW0zMmNoYXJhY3RlcnM=
+    expiration: 1800000 # 30 minutes in ms
+    refresh-expiration: 604800000 # 7 days in ms

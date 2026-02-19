@@ -1,14 +1,15 @@
 package com.orthowatch.model;
 
-import io.hypersistence.utils.hibernate.type.array.ListArrayType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
-import java.util.List;
+
 import java.util.UUID;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.Type;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -46,9 +47,9 @@ public class DailyResponse {
   @Column(name = "fever_level")
   private String feverLevel;
 
-  @Type(ListArrayType.class)
+  @JdbcTypeCode(SqlTypes.ARRAY)
   @Column(name = "dvt_symptoms", columnDefinition = "varchar[]")
-  private List<String> dvtSymptoms;
+  private String[] dvtSymptoms;
 
   @Column(name = "mobility_achieved")
   private Boolean mobilityAchieved;

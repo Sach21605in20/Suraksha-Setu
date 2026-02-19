@@ -4,9 +4,9 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:postgresql://localhost:5432/orthowatch
-    username: orthowatch_user
-    password: orthowatch_pass
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/orthowatch}
+    username: ${SPRING_DATASOURCE_USERNAME:orthowatch_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:orthowatch_pass}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -25,3 +25,10 @@ logging:
   level:
     com.orthowatch: DEBUG
     org.springframework.web: INFO
+
+app:
+  jwt:
+    secret: ${APP_JWT_SECRET}
+    refresh-secret: ${APP_JWT_REFRESH_SECRET}
+    expiration: ${APP_JWT_EXPIRATION}
+    refresh-expiration: ${APP_JWT_REFRESH_EXPIRATION}

@@ -1,6 +1,8 @@
 package com.orthowatch.model;
 
 import io.hypersistence.utils.hibernate.type.json.JsonType;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
@@ -46,6 +48,7 @@ public class RecoveryTemplate {
   private Map<String, Object> milestoneConfig;
 
   @Builder.Default
+  @JdbcTypeCode(SqlTypes.ARRAY)
   @Column(name = "mandatory_image_days", columnDefinition = "integer[]", nullable = false)
   private List<Integer> mandatoryImageDays = List.of(3, 5);
 
