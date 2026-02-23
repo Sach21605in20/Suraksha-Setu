@@ -1,5 +1,11 @@
+import { useEffect } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { ProtectedRoute } from '@/components/ProtectedRoute'
+import { LoginPage } from '@/pages/LoginPage'
+import { DashboardPage } from '@/pages/DashboardPage'
+import { useAuthStore } from '@/store/authStore'
+import { refreshToken } from '@/api/auth'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -10,47 +16,40 @@ const queryClient = new QueryClient({
   },
 })
 
+// ─── Bootstrap ────────────────────────────────────────────────────────────────
+// Separated so it has access to the router context but runs once on mount.
+function AuthBootstrap() {
+  const { setAuth, clearAuth } = useAuthStore()
+
+  useEffect(() => {
+    // Attempt silent refresh using the HttpOnly cookie.
+    // withCredentials: true on the Axios instance sends the cookie automatically.
+    refreshToken()
+      .then((res) => setAuth(res.user, res.accessToken))
+      .catch(() => clearAuth()) // cookie absent or expired → stay logged out
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  return null
+}
+
+// ─── App ──────────────────────────────────────────────────────────────────────
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <AuthBootstrap />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
-                <div className="card max-w-md w-full text-center animate-fade-in">
-                  <div className="mb-4">
-                    <span className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-100">
-                      <svg
-                        className="w-8 h-8 text-primary-600"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                    </span>
-                  </div>
-                  <h1 className="text-2xl font-bold text-neutral-900 mb-2">
-                    OrthoWatch
-                  </h1>
-                  <p className="text-neutral-500 text-sm mb-6">
-                    Post-Discharge Monitoring System
-                  </p>
-                  <div className="flex gap-2 justify-center">
-                    <span className="badge-risk-low">Frontend ✓</span>
-                    <span className="badge-risk-medium">Backend Pending</span>
-                  </div>
-                </div>
-              </div>
-            }
-          />
+          {/* Public */}
+          <Route path="/login" element={<LoginPage />} />
+
+          {/* Protected */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<DashboardPage />} />
+          </Route>
+
+          {/* Catch-all → dashboard (ProtectedRoute will redirect to /login if needed) */}
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
