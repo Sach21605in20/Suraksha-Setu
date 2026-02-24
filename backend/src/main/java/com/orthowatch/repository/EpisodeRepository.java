@@ -11,4 +11,7 @@ public interface EpisodeRepository extends JpaRepository<Episode, UUID> {
   List<Episode> findByPrimarySurgeonId(UUID primarySurgeonId);
 
   List<Episode> findByStatus(String status);
+
+  boolean existsByPatientIdAndTemplateSurgeryTypeAndStatus(
+      UUID patientId, String surgeryType, String status);
 }

@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RecoveryTemplateRepository extends JpaRepository<RecoveryTemplate, UUID> {
   Optional<RecoveryTemplate> findBySurgeryType(String surgeryType);
+
+  Optional<RecoveryTemplate> findBySurgeryTypeAndIsActiveTrue(String surgeryType);
 }

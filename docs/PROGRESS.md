@@ -85,5 +85,38 @@ One repository per entity with domain-specific query methods.
 
 ---
 
-## Next: Phase 2.2 — Authentication System (Frontend)
-- Frontend: Login page, auth store (Zustand, memory-only), silent refresh on bootstrap, protected routes
+## ✅ Phase 2.2 — Authentication System (Frontend) (Completed 2026-02-23)
+- **Status**: Verified
+- **Features**: Login page (Zustand + zod), silent refresh (HttpOnly cookie), protected routes.
+- **Verification**: Manually verified by user; redirection, validation, and session persistence confirmed.
+
+## ✅ Phase 3.1 — Enrollment Service (Completed 2026-02-24)
+- **Status**: Verified — 17 tests passing (9 unit + 8 controller)
+
+### What was built
+
+#### Production Code
+- **DTOs**: `EnrollmentRequest` (Bean Validation) + `EnrollmentResponse`
+- **Mappers**: MapStruct `PatientMapper`, `EpisodeMapper`
+- **Service**: `EnrollmentService` — find/create patient, create episode, consent log, audit log, schedule Quartz timeout
+- **Controller**: `EnrollmentController` — `POST /api/v1/enrollments` with `@PreAuthorize("hasAnyRole('NURSE', 'ADMIN')")`
+- **Exceptions**: `ResourceNotFoundException` (404), `DuplicateResourceException` (409)
+- **Quartz**: `ConsentTimeoutJob` — auto-expire consent after 24h
+- **Global Error Handling**: Updated `GlobalExceptionHandler` for validation, 404, 409
+
+#### Flyway Migrations
+- `V4__seed_surgeon_user.sql` — surgeon user for FK references
+- `V5__seed_templates.sql` — recovery templates with JSONB configs
+
+#### Tests
+- **Unit (9/9)**: `EnrollmentServiceTest` — Mockito tests for enrollment flow, patient reuse, 404/409 errors, Quartz scheduling
+- **Controller (8/8)**: `EnrollmentControllerTest` — `@WebMvcTest` + `@ContextConfiguration` for validation and happy path
+- **Integration**: `EnrollmentIntegrationTest` (Testcontainers) — written, requires Docker to run
+
+---
+
+## Next: Phase 3.2 — Daily Checklist Ingest + Risk Engine
+- Daily response ingestion pipeline
+- WhatsApp template configuration
+- Risk scoring logic (v1)
+
